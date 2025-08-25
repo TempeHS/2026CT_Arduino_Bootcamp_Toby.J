@@ -22,14 +22,36 @@
     https://www.tinkercad.com/things/kngLnqo2HEU?sharecode=OVpOeJsUP3bOHBkzbkWCfGcuSIswqXiISYQiG6UzotA
     https://github.com/TempeHS/TempeHS_Ardunio_Bootcamp/blob/main/11.ultrasonicSensor/Bootcamp-ultrasonicSensor.png
 */
+// Includes for OLED screen
+#include <Arduino.h>
+#include <U8g2lib.h>
+#include <SPI.h>
+#include <Wire.h>
 
 #include "Ultrasonic.h"
+#include <Servo.h>
+
+Servo myservo;
+
+int sonicPin = 5;
+int servoPin = 6;
+
+int val;
+
+Ultrasonic myUltraSonicSensor(sonicPin);
 
 void setup()
 {
-  
+  Serial.begin(9600);
+  myservo.attach(servoPin);
 }
 void loop()
 {
-  
+  unsigned long RangeInCentimeters = myUltraSonicSensor.distanceRead();
+  Serial.print(RangeInCentimeters);
+  Serial.println("cm");
+
+  val = map(RangeInCentimeters, 0, 40, 0, 180);
+  myservo.write(val);
+  delay(100);
 }
