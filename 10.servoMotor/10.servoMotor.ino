@@ -21,22 +21,76 @@
     https://www.tinkercad.com/things/lQ9RyYJRoLn?sharecode=MKlN0A7R0WGodkdTRKkPJO7I8PeI5L_GCR7pCclQ0qM
     https://github.com/TempeHS/TempeHS_Ardunio_Bootcamp/blob/main/10.servoMotor/Bootcamp-servoMotor.png
 */
+//Includes or OLED screen
+#include <Arduino.h>
+#include <U8g2lib.h>
+#include <SPI.h>
+#include <Wire.h>
 
 #include <Servo.h>
 
-Servo myservo;
-unsigned static int servoPin = 6;
+#include "Ultrasonic.h"
+Ultrasonic myUltraSonicSensor(5);
 
-int potpin = A1;
+unsigned static int servoPin = 6;
+unsigned static int usPin = 5;
+Servo myservo;
+
 int val;
+int potpin = A1;
+
+U8G2_SSD1306_128X64_NONAME_F_HW_I2C OLED(U8G2_R0, SCL, SDA, U8X8_PIN_NONE);
 
 void setup() {
   myservo.attach(servoPin);
+  Serial.begin(9600);
+
+  OLED.begin();
+  OLED.setFont(u8g2_font_6x12_tf);
+  OLED.drawStr(0,10,"Ultrasonic Sensor");
+  OLED.drawStr(0,20,"---------------------");
+  OLED.nextPage();
+  delay(3000);
 }
 
-void loop() {
-  val = analogRead(potpin);
-  val = map(val,0, 1023, 0, 180);
-  myservo.write(val);
+void loop(void) {
+
+  static String inputString = "";
+  static bool stringComplete = false;
+  //unsigned long RangeInCentimeters = myUltraSonicSensor.distanceRead();
   delay(15);
+
+
+
+  //Serial.println(RangeInCentimeters);
+  //OLED.drawStr(0,20,RangeInCentimeters);
+  //OLED.drawStr(0,20," cm");
+
+  delay(250);
+
+  while (Serial.available()) {
+    char inChar = (char)Serial.read();
+    if (inChar == '\n') {
+      stringComplete = true;
+      break;
+    } else if (inChar != '\r') {
+      inputString += inChar;
+    }
+  }
+
+
+  if (stringComplete == true) {
+    Serial.println(inputString);
+    OLED.clearBuffer();
+    OLED.setCursor(0, 20);
+    OLED.print(inputString);
+    OLED.sendBuffer();
+    inputString = "";
+    stringComplete = false;
+
+  }
+
+  
+  
+  
 }
