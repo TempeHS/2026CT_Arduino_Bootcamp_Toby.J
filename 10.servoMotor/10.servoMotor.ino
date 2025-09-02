@@ -53,44 +53,23 @@ void setup() {
   delay(3000);
 }
 
-void loop(void) {
+void loop(){
+  
 
-  static String inputString = "";
-  static bool stringComplete = false;
-  //unsigned long RangeInCentimeters = myUltraSonicSensor.distanceRead();
-  delay(15);
+  String inputString = "10cm";
+  String cleanString = "";
 
-
-
-  //Serial.println(RangeInCentimeters);
-  //OLED.drawStr(0,20,RangeInCentimeters);
-  //OLED.drawStr(0,20," cm");
-
-  delay(250);
-
-  while (Serial.available()) {
-    char inChar = (char)Serial.read();
-    if (inChar == '\n') {
-      stringComplete = true;
-      break;
-    } else if (inChar != '\r') {
-      inputString += inChar;
+  for (unsigned int i = 0; i < inputString.length(); i++) {
+    char inChar = inputString[i];
+    if (inChar != '\n' && inChar != '\r') {
+      cleanString += inChar;
+    }
+    if(inChar == '\n'){
+      cleanString += '_';
     }
   }
-
-
-  if (stringComplete == true) {
-    Serial.println(inputString);
-    OLED.clearBuffer();
-    OLED.setCursor(0, 20);
-    OLED.print(inputString);
-    OLED.sendBuffer();
-    inputString = "";
-    stringComplete = false;
-
-  }
-
-  
-  
+  OLED.clearBuffer();
+  OLED.print(cleanString);
+  delay(1000);
   
 }
