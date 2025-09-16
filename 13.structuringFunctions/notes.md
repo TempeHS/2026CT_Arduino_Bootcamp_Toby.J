@@ -11,3 +11,34 @@ If a fall is detected, the screen will print that the user has fallen, play a be
 | Buzzer | Auditory Alert | 4 |
 | LED | Visual Alert | 6 |
 | OLED Screen | Visual message | I2C |
+
+
+
+'''FALL DETECTOR
+BEGIN
+
+  SETUP Accelerometer
+  SETUP LED
+  SETUP Buzzer
+  SETUP button
+
+  WHILE power == on
+    READ Accelerometer X,Y,Z
+    
+    IF Accelerometer Z > 3.5 THEN
+      fallen = true
+
+
+    IF fallen == TRUE THEN
+      Flash LED
+      Sound Buzzer
+
+    IF button == PRESSED THEN
+      STOP Flashing LED
+      STOP Sounding buzzer
+      fallen = FALSE 
+    DELAY(1000)
+
+
+'''END
+ 
