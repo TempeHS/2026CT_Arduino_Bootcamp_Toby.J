@@ -41,4 +41,92 @@ BEGIN
 
 
 '''END
+
+
+----------------------------------------------------------------------------------------------------------
+
+
+
+
+
+# VIVIAN Exertion detector
+
+I have also chosen to create a device for Vivian, which will monitor her vitals.
+
+
+| Sensor | Use | Pin |
+| ------ | --- | --- |
+| Temperature | Senses temperature | I2C |
+| Heart Rate | Sense heart rate | 5 |
+| Buzzer | Auditory Alert | 4 |
+| OLED Screen | Visual message | I2C |
+
+
+'''EXERTION DETECTOR
+BEGIN
+  SETUP Temperature sensor
+  SETUP Heart rate sensor
+  SETUP Buzzer
+  SETUP Button
+  SETUP OLED Screen
+
+  WHILE power == on {
+    READ Temperature sensor
+    READ Heart rate sensor
+
+    IF temp >= 25 || HR >= 90 {
+      WARNING = true
+    } 
+
+    while WARNING {
+      SOUND Buzzer
+      PRINT Oled Screen warning
+
+      if button {
+        WARNING = false
+      }
+    }
+  }
+    
+'''END
+
+----------------------------------------------------------------------------------------------------------
+
+
+I have chosen to create a biomedical device for Faia, which will help her navigate her school.
+
+| Sensor | Use | Pin |
+| ------ | --- | --- |
+| Gesture | Senses gestures | I2C |
+| Motion sensor | Sense motion | 5 |
+| Buzzer | Auditory Alert | 4 |
+| Vibration motor | Haptic feedback | I2C |
+
+
+'''BLIND ASSISTANCE
+BEGIN
+  SETUP Gesture sensor
+  SETUP Motion sensor
+  SETUP Buzzer
+  SETUP Vibration motor
+
+  WHILE power == on
+    READ Gesture sensor
+    IF gesture == OK {
+      operating = true
+    } 
+    IF Gesture == PALM {
+      operating = false }
+
+    while operating {
+      IF motion < 2 meters {
+        SOUND Buzzer
+        SPIN Vibration motor
+        delay(1000)
+      }
+    }
+    
+'''END
+
+
  
