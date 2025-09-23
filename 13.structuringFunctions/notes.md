@@ -51,7 +51,7 @@ BEGIN
 
 # VIVIAN Exertion detector
 
-I have also chosen to create a device for Vivian, which will monitor her vitals.
+I have chosen to create a device for Vivian, which will monitor her vitals.
 
 
 | Sensor | Use | Pin |
@@ -93,7 +93,7 @@ BEGIN
 ----------------------------------------------------------------------------------------------------------
 
 
-I have chosen to create a biomedical device for Faia, which will help her navigate her school.
+I have also chosen to create a biomedical device for Faia, which will help her navigate her school.
 
 | Sensor | Use | Pin |
 | ------ | --- | --- |

@@ -6,7 +6,7 @@ int LED = 6;
 int buzzer = 7;
 int button = 5;
 bool fallen = false;
-const int beepDuration = 150;
+const int beepDuration = 100;
 const int beepInterval = 2000;
 unsigned long previousMillis = 0;
 
@@ -14,7 +14,7 @@ unsigned long previousMillis = 0;
 void setup() {
   Serial.begin(9600);
   LIS.begin(WIRE, LIS3DHTR_ADDRESS_UPDATED); //IIC init
-  delay(100);
+  de9lay(100);
   LIS.setOutputDataRate(LIS3DHTR_DATARATE_50HZ);
   pinMode(LED, OUTPUT);
   pinMode(buzzer, OUTPUT);
